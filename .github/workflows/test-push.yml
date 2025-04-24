@@ -40,6 +40,7 @@ jobs:
           script/install-libarchive.sh
   unit-tests:
     runs-on: macos-latest
+    needs: install-vendor
     steps:
       - uses: actions/checkout@v4
       - name: Restore Vendor
