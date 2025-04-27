@@ -145,3 +145,23 @@ cmake -DCMAKE_PREFIX_PATH="$VENDOR" -S . -B build
 cmake_build_install
 
 rm "$HTML_FORMS_DOWNLOAD"
+
+# html_forms_server
+HTML_FORMS_SERVER_DOWNLOAD="$VENDORSRC/html_forms_server-download.tgz"
+
+download \
+	-u "https://github.com/gulachek/html_forms/releases/download/v0.1.0/html_forms_server-0.1.0.tgz" \
+	-o "$HTML_FORMS_SERVER_DOWNLOAD" \
+	-c "56ffd03e30d2db91b4e090968a641ab82513da56b36d1a0b0221d7178396410b"
+
+HTML_FORMS_SERVER="$VENDORSRC/html_forms_server"
+md "$HTML_FORMS_SERVER"
+
+untar -f "$HTML_FORMS_SERVER_DOWNLOAD" -d "$HTML_FORMS_SERVER"
+cp "$HTML_FORMS_SERVER/LICENSE.txt" "$DEP_LICENSES/html_forms_server.txt"
+
+cd "$HTML_FORMS_SERVER"
+cmake -DCMAKE_PREFIX_PATH="$VENDOR" -S . -B build
+cmake_build_install
+
+rm "$HTML_FORMS_SERVER_DOWNLOAD"
