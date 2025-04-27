@@ -36,8 +36,8 @@ jobs:
       - if: ${{ steps.cache-vendor.outputs.cache-hit != 'true' }}
         name: Install Vendor
         run: |
-          script/install-deps.sh
           script/install-libarchive.sh
+          script/install-deps.sh
   unit-tests:
     runs-on: macos-latest
     needs: install-vendor
