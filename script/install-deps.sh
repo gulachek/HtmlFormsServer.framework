@@ -125,3 +125,23 @@ cmake -DCMAKE_PREFIX_PATH="$VENDOR" -S . -B build
 cmake_build_install
 
 rm "$CATUI_DOWNLOAD"
+
+# html_forms
+HTML_FORMS_DOWNLOAD="$VENDORSRC/html_forms-download.tgz"
+
+download \
+	-u "https://github.com/gulachek/html_forms/releases/download/v0.1.0/html_forms-0.1.0.tgz" \
+	-o "$HTML_FORMS_DOWNLOAD" \
+	-c "06511e9fb8a1e2e8ae175c765258336aa2a9ffad6de3d25c5dfa6e4949d7f43e"
+
+HTML_FORMS="$VENDORSRC/html_forms"
+md "$HTML_FORMS"
+
+untar -f "$HTML_FORMS_DOWNLOAD" -d "$HTML_FORMS"
+cp "$HTML_FORMS/LICENSE.txt" "$DEP_LICENSES/html_forms.txt"
+
+cd "$HTML_FORMS"
+cmake -DCMAKE_PREFIX_PATH="$VENDOR" -S . -B build
+cmake_build_install
+
+rm "$HTML_FORMS_DOWNLOAD"
