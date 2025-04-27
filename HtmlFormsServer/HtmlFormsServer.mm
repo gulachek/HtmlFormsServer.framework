@@ -22,6 +22,10 @@
     return self;
 }
 
+-(void) dealloc{
+    html_forms_server_free(self->server_);
+}
+
 -(void) start{
     
 }
