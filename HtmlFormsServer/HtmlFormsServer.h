@@ -13,6 +13,18 @@ FOUNDATION_EXPORT double HtmlFormsServerVersionNumber;
 //! Project version string for HtmlFormsServer.
 FOUNDATION_EXPORT const unsigned char HtmlFormsServerVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <HtmlFormsServer/PublicHeader.h>
+@protocol HtmlFormsServerDelegate <NSObject>
 
+-(void)openUrl:(NSURL*_Nonnull)url windowId:(int)windowId;
 
+@end
+
+@interface HtmlFormsServer : NSObject
+
+@property (weak) id<HtmlFormsServerDelegate> _Nullable delegate;
+
+-(nonnull instancetype)initWithPort:(int)port sessionDir:(NSString* _Nonnull)sessionDir;
+-(void)start;
+-(void)stop;
+
+@end
