@@ -10,7 +10,7 @@
 
 @implementation HtmlFormsServer
 
--(nonnull instancetype)initWithPort:(int)port sessionDir:(NSString *)sessionDir {
+-(nonnull instancetype)initWithPort:(int)port sessionDir:(NSURL *)sessionDir {
     return self;
 }
 
