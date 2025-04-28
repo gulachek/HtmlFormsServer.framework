@@ -5,6 +5,8 @@ set -x
 
 . script/util.sh
 
+CMAKE_ARCH="-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64"
+
 cmake_build_install() {
 	cmake --build build
 	cmake --install build --prefix "$VENDOR"
@@ -28,6 +30,7 @@ cp "$ZLIB/LICENSE" "$DEP_LICENSES/zlib.txt"
 
 cd "$ZLIB"
 cmake -S . -B build \
+	"$CMAKE_ARCH" \
 	-DZLIB_BUILD_EXAMPLES=OFF \
 	-DCMAKE_INSTALL_PREFIX="$VENDOR" \
 	-DINSTALL_PKGCONFIG_DIR="$VENDOR/lib/pkgconfig"
@@ -62,7 +65,12 @@ cp "$CJSON/LICENSE" "$DEP_LICENSES/cJSON.txt"
 # cJSON CMakeLists.txt configures files that have full install paths. Must define prefix
 
 cd "$CJSON"
-cmake -DENABLE_CJSON_TEST=OFF -DBUILD_SHARED_LIBS=OFF "-DCMAKE_INSTALL_PREFIX=$VENDOR" -S . -B build
+cmake \
+	"$CMAKE_ARCH" \
+	-DENABLE_CJSON_TEST=OFF \
+	-DBUILD_SHARED_LIBS=OFF \
+	"-DCMAKE_INSTALL_PREFIX=$VENDOR" \
+	-S . -B build
 cmake_build_install
 
 rm "$CJSON_DOWNLOAD"
@@ -81,7 +89,7 @@ untar -f "$MSGSTREAM_DOWNLOAD" -d "$MSGSTREAM"
 cp "$MSGSTREAM/LICENSE.txt" "$DEP_LICENSES/msgstream.txt"
 
 cd "$MSGSTREAM"
-cmake -S . -B build
+cmake -S . -B build "$CMAKE_ARCH"
 cmake_build_install
 
 rm "$MSGSTREAM_DOWNLOAD"
@@ -101,7 +109,7 @@ untar -f "$UNIX_DOWNLOAD" -d "$UNIX"
 cp "$UNIX/LICENSE.txt" "$DEP_LICENSES/unixsocket.txt"
 
 cd "$UNIX"
-cmake -S . -B build
+cmake -S . -B build "$CMAKE_ARCH"
 cmake_build_install
 
 rm "$UNIX_DOWNLOAD"
@@ -121,7 +129,7 @@ untar -f "$CATUI_DOWNLOAD" -d "$CATUI"
 cp "$CATUI/LICENSE.txt" "$DEP_LICENSES/catui.txt"
 
 cd "$CATUI"
-cmake -DCMAKE_PREFIX_PATH="$VENDOR" -S . -B build
+cmake -DCMAKE_PREFIX_PATH="$VENDOR" "$CMAKE_ARCH" -S . -B build
 cmake_build_install
 
 rm "$CATUI_DOWNLOAD"
@@ -141,7 +149,7 @@ untar -f "$HTML_FORMS_DOWNLOAD" -d "$HTML_FORMS"
 cp "$HTML_FORMS/LICENSE.txt" "$DEP_LICENSES/html_forms.txt"
 
 cd "$HTML_FORMS"
-cmake -DCMAKE_PREFIX_PATH="$VENDOR" -S . -B build
+cmake -DCMAKE_PREFIX_PATH="$VENDOR" "$CMAKE_ARCH" -S . -B build
 cmake_build_install
 
 rm "$HTML_FORMS_DOWNLOAD"
@@ -161,7 +169,7 @@ untar -f "$HTML_FORMS_SERVER_DOWNLOAD" -d "$HTML_FORMS_SERVER"
 cp "$HTML_FORMS_SERVER/LICENSE.txt" "$DEP_LICENSES/html_forms_server.txt"
 
 cd "$HTML_FORMS_SERVER"
-cmake -DCMAKE_PREFIX_PATH="$VENDOR" -S . -B build
+cmake -DCMAKE_PREFIX_PATH="$VENDOR" "$CMAKE_ARCH" -S . -B build
 cmake_build_install
 
 rm "$HTML_FORMS_SERVER_DOWNLOAD"

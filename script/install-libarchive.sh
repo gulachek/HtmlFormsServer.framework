@@ -5,6 +5,8 @@ set -x
 
 . script/util.sh
 
+CMAKE_ARCH="-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64"
+
 SRC="$PWD"
 LA_DOWNLOAD="$VENDORSRC/download-libarchive.tgz"
 
@@ -23,6 +25,7 @@ cd "$LA"
 # Timings listed from x64 macOS 13.7.4 w/ 2.9 GHz proc
 # ~1.5 min
 cmake -S . -B build \
+	"$CMAKE_ARCH" \
 	-DCMAKE_INSTALL_PREFIX="$VENDOR" \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DBUILD_TESTING=OFF \
