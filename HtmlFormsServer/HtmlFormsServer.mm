@@ -31,6 +31,10 @@ static void evt_callback(const html_forms_server_event *evt, void *ctx);
     html_forms_server_free(self->server_);
 }
 
+-(void)connectClientFd:(int)clientFd {
+    html_forms_server_connect(self->server_, clientFd);
+}
+
 -(void) start{
     if (self->is_running_)
         return;

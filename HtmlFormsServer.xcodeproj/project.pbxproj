@@ -425,7 +425,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = ./vendor/include;
+				LIBRARY_SEARCH_PATHS = ./vendor/lib;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-lunixsocket",
+					"-lmsgstream",
+					"-lcatui",
+					"-lcjson",
+					"-lhtml_forms",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gulachek.HtmlFormsServerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -438,7 +447,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = ./vendor/include;
+				LIBRARY_SEARCH_PATHS = ./vendor/lib;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-lunixsocket",
+					"-lmsgstream",
+					"-lcatui",
+					"-lcjson",
+					"-lhtml_forms",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gulachek.HtmlFormsServerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

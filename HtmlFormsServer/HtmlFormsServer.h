@@ -24,6 +24,7 @@ FOUNDATION_EXPORT const unsigned char HtmlFormsServerVersionString[];
 @property (weak) id<HtmlFormsServerDelegate> _Nullable delegate;
 
 -(nonnull instancetype)initWithPort:(NSInteger)port sessionDir:(NSURL* _Nonnull)sessionDir;
+-(void)connectClientFd:(int)clientFd;
 -(void)start;
 -(void)stop;
 
