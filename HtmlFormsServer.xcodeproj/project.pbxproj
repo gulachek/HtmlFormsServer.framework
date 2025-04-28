@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D7245EC42DBFD691009F4E70 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D7245EC22DBFD691009F4E70 /* LICENSE */; };
+		D7245EC52DBFD691009F4E70 /* DEPENDENCY-LICENSES in Resources */ = {isa = PBXBuildFile; fileRef = D7245EC32DBFD691009F4E70 /* DEPENDENCY-LICENSES */; };
 		D78F7A102DB9AB32002DF802 /* HtmlFormsServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78F7A072DB9AB32002DF802 /* HtmlFormsServer.framework */; };
 		D78F7A152DB9AB32002DF802 /* HtmlFormsServerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D78F7A142DB9AB32002DF802 /* HtmlFormsServerTests.m */; };
 		D78F7A162DB9AB32002DF802 /* HtmlFormsServer.h in Headers */ = {isa = PBXBuildFile; fileRef = D78F7A0A2DB9AB32002DF802 /* HtmlFormsServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +26,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D7245EC22DBFD691009F4E70 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		D7245EC32DBFD691009F4E70 /* DEPENDENCY-LICENSES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "DEPENDENCY-LICENSES"; sourceTree = SOURCE_ROOT; };
 		D78F7A072DB9AB32002DF802 /* HtmlFormsServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HtmlFormsServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D78F7A0A2DB9AB32002DF802 /* HtmlFormsServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HtmlFormsServer.h; sourceTree = "<group>"; };
 		D78F7A0F2DB9AB32002DF802 /* HtmlFormsServerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HtmlFormsServerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +75,8 @@
 		D78F7A092DB9AB32002DF802 /* HtmlFormsServer */ = {
 			isa = PBXGroup;
 			children = (
+				D7245EC32DBFD691009F4E70 /* DEPENDENCY-LICENSES */,
+				D7245EC22DBFD691009F4E70 /* LICENSE */,
 				D78F7A0A2DB9AB32002DF802 /* HtmlFormsServer.h */,
 				D7BA37522DBEE46600A38576 /* HtmlFormsServer.mm */,
 			);
@@ -176,6 +182,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7245EC42DBFD691009F4E70 /* LICENSE in Resources */,
+				D7245EC52DBFD691009F4E70 /* DEPENDENCY-LICENSES in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
