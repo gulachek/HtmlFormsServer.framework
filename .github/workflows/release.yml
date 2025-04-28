@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  install-vendor:
+    uses: ./.github/workflows/install-vendor.yml
+  package-and-release:
+    runs-on: macos-latest
+    needs: install-vendor
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore Vendor
+        id: restore-vendor
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ needs.install-vendor.outputs.cache-key }}
+      - run: script/test-pkg.sh
+      - run: script/upload-package.sh
