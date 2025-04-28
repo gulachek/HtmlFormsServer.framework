@@ -5,7 +5,7 @@ on: [push]
 jobs:
   install-vendor:
     uses: ./.github/workflows/install-vendor.yml
-  run-unit-tests:
+  run-automated-tests:
     runs-on: macos-latest
     needs: install-vendor
     steps:
@@ -16,4 +16,7 @@ jobs:
         with:
           path: vendor
           key: ${{ needs.install-vendor.outputs.cache-key }}
-      - run: xcodebuild -scheme HtmlFormsServer test
+      - name: Run Unit Tests
+        run: xcodebuild -scheme HtmlFormsServer test
+      - name: Run Package Tests
+        run: script/test-pkg.sh
