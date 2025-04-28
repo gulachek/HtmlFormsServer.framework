@@ -11,11 +11,18 @@
 #include <html_forms_server.h>
 #include <os/log.h>
 
-static void evt_callback(const html_forms_server_event *evt, void *ctx);
-
 @implementation HtmlFormsServer {
     html_forms_server *server_;
     BOOL is_running_;
+    os_log_t log_;
+}
+
+static void evt_callback(const html_forms_server_event *evt, void *ctx) {
+    if (!(evt && ctx))
+        return;
+    
+    HtmlFormsServer *server = (__bridge HtmlFormsServer*)ctx;
+    [server handleEvent:evt];
 }
 
 -(nonnull instancetype)initWithPort:(NSInteger)port sessionDir:(NSURL *)sessionDir {
@@ -24,6 +31,7 @@ static void evt_callback(const html_forms_server_event *evt, void *ctx);
     const char *sessionDirCstr = [sessionDirStr cStringUsingEncoding:NSUTF8StringEncoding];
     self->server_ = html_forms_server_init(shortPort, sessionDirCstr);
     self->is_running_ = NO;
+    self->log_ = os_log_create("com.gulachek.HtmlFormsServer", "server");
     return self;
 }
 
@@ -54,14 +62,8 @@ static void evt_callback(const html_forms_server_event *evt, void *ctx);
     html_forms_server_stop(self->server_);
 }
 
-@end
-
-static void evt_callback(const html_forms_server_event *evt, void *ctx) {
-    if (!(evt && ctx))
-        return;
-    
-    HtmlFormsServer *server = (__bridge HtmlFormsServer*)ctx;
-    id<HtmlFormsServerDelegate> del = server.delegate;
+-(void) handleEvent:(const html_forms_server_event *)evt {
+    id<HtmlFormsServerDelegate> del = self.delegate;
     if (!del)
         return;
     
@@ -75,6 +77,8 @@ static void evt_callback(const html_forms_server_event *evt, void *ctx) {
         NSInteger winId = evt->data.close_win.window_id;
         [del closeWindow:winId];
     } else {
-        // do thing
+        os_log(self->log_, "Received server event with unknown type (type=%d)", evt->type);
     }
 }
+
+@end
