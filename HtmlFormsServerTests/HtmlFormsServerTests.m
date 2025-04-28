@@ -19,6 +19,7 @@
 @interface ServerThread : NSThread <HtmlFormsServerDelegate>
 
 @property NSURL *_Nullable mostRecentURL;
+@property BOOL windowClosed;
 
 -(nonnull instancetype)initWithCatuiFd:(int)catuiFd server:(HtmlFormsServer*)server;
 
@@ -33,6 +34,8 @@
     self->catuiFd_ = catuiFd;
     self->server_ = server;
     server.delegate = self;
+    self.mostRecentURL = nil;
+    self.windowClosed = NO;
     return [super init];
 }
 
@@ -50,8 +53,12 @@
     [self->server_ start];
 }
 
-- (void)openUrl:(NSURL * _Nonnull)url windowId:(NSInteger)windowId { 
+- (void)openUrl:(NSURL * _Nonnull)url window:(NSInteger)windowId {
     self.mostRecentURL = url;
+}
+
+- (void)closeWindow:(NSInteger)windowId {
+    self.windowClosed = YES;
 }
 
 @end
@@ -109,14 +116,36 @@
     XCTAssertTrue(html_connect(&con));
     
     html_navigate(con, "/index.html");
+    
+    int i = 0;
     NSURL *url = nil;
-    while (!url) {
-        // spin lock
+    while (!url && i++ < 1000) {
         url = th.mostRecentURL;
         [NSThread sleepForTimeInterval:0.01];
     }
     
     XCTAssertTrue([[url path] hasSuffix:@"/index.html"]);
+}
+
+- (void)testDisconnectInformsDelegateCloseWindow {
+    HtmlFormsServer *server = [[HtmlFormsServer alloc] initWithPort:PORT sessionDir:self.sessionDir];
+    XCTAssertNotNil(server);
+    
+    ServerThread *th = [[ServerThread alloc] initWithCatuiFd:self.catuiFd server:server];
+    [th start];
+    
+    html_connection *con;
+    XCTAssertTrue(html_connect(&con));
+    
+    html_navigate(con, "/index.html");
+    html_disconnect(con);
+    
+    int i = 0;
+    while (!th.windowClosed && i++ < 1000) {
+        [NSThread sleepForTimeInterval:0.01];
+    }
+    
+    XCTAssertTrue(th.windowClosed);
 }
 
 @end

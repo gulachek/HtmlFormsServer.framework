@@ -15,7 +15,8 @@ FOUNDATION_EXPORT const unsigned char HtmlFormsServerVersionString[];
 
 @protocol HtmlFormsServerDelegate <NSObject>
 
--(void)openUrl:(NSURL*_Nonnull)url windowId:(NSInteger)windowId;
+-(void)openUrl:(NSURL*_Nonnull)url window:(NSInteger)windowId;
+-(void)closeWindow:(NSInteger)windowId;
 
 @end
 

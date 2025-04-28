@@ -9,6 +9,7 @@
 #import <HtmlFormsServer/HtmlFormsServer.h>
 
 #include <html_forms_server.h>
+#include <os/log.h>
 
 static void evt_callback(const html_forms_server_event *evt, void *ctx);
 
@@ -69,6 +70,11 @@ static void evt_callback(const html_forms_server_event *evt, void *ctx) {
         NSString *urlStr = [NSString stringWithCString:evt->data.open_url.url encoding:NSUTF8StringEncoding];
         NSURL *url = [NSURL URLWithString:urlStr];
         
-        [del openUrl:url windowId:winId];
+        [del openUrl:url window:winId];
+    } else if (evt->type == HTML_FORMS_SERVER_EVENT_CLOSE_WINDOW) {
+        NSInteger winId = evt->data.close_win.window_id;
+        [del closeWindow:winId];
+    } else {
+        // do thing
     }
 }
