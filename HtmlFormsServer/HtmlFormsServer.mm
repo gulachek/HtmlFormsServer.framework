@@ -91,6 +91,17 @@ static void evt_callback(const html_forms_server_event *evt, void *ctx) {
         
         if (del)
             [del closeWindow:winId];
+    } else if (evt->type == HTML_FORMS_SERVER_EVENT_SHOW_ERROR) {
+        NSInteger winId = evt->data.show_err.window_id;
+        NSString *errMsg = [NSString stringWithCString:evt->data.show_err.msg encoding:NSUTF8StringEncoding];
+        
+        if (os_log_debug_enabled(self->log_)) {
+            os_log_debug(self->log_, "Showing error '%@' on window %ld", errMsg, (long)winId);
+        }
+        
+        if (del)
+            [del showErrorMessage:errMsg window:winId];
+        
     } else {
         os_log(self->log_, "Received server event with unknown type (type=%d)", evt->type);
     }

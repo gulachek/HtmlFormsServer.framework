@@ -17,6 +17,7 @@ FOUNDATION_EXPORT const unsigned char HtmlFormsServerVersionString[];
 
 -(void)openUrl:(NSURL*_Nonnull)url window:(NSInteger)windowId;
 -(void)closeWindow:(NSInteger)windowId;
+-(void)showErrorMessage:(NSString*_Nonnull)errMsg window:(NSInteger)windowId;
 
 @end
 

@@ -20,6 +20,7 @@
 
 @property NSURL *_Nullable mostRecentURL;
 @property BOOL windowClosed;
+@property BOOL hasErrorMsg;
 
 -(nonnull instancetype)initWithCatuiFd:(int)catuiFd server:(HtmlFormsServer*)server;
 
@@ -59,6 +60,10 @@
 
 - (void)closeWindow:(NSInteger)windowId {
     self.windowClosed = YES;
+}
+
+-(void)showErrorMessage:(NSString*_Nonnull)errMsg window:(NSInteger)windowId {
+    self.hasErrorMsg = YES;
 }
 
 @end
@@ -146,6 +151,28 @@
     }
     
     XCTAssertTrue(th.windowClosed);
+}
+
+- (void)testForcefulSocketCloseInformsServerShowError {
+    HtmlFormsServer *server = [[HtmlFormsServer alloc] initWithPort:PORT sessionDir:self.sessionDir];
+    XCTAssertNotNil(server);
+    
+    ServerThread *th = [[ServerThread alloc] initWithCatuiFd:self.catuiFd server:server];
+    [th start];
+    
+    html_connection *con;
+    XCTAssertTrue(html_connect(&con));
+    
+    html_navigate(con, "/index.html");
+    close(html_connection_fd(con));
+    
+    int i = 0;
+    while (!th.hasErrorMsg && i++ < 1000) {
+        [NSThread sleepForTimeInterval:0.01];
+    }
+    
+    XCTAssertTrue(th.hasErrorMsg);
+    html_disconnect(con);
 }
 
 @end
