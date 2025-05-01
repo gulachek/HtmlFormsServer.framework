@@ -15,19 +15,21 @@ FOUNDATION_EXPORT const unsigned char HtmlFormsServerVersionString[];
 
 @protocol HtmlFormsServerDelegate <NSObject>
 
--(void)openUrl:(NSURL*_Nonnull)url window:(NSInteger)windowId;
--(void)closeWindow:(NSInteger)windowId;
--(void)showErrorMessage:(NSString*_Nonnull)errMsg window:(NSInteger)windowId;
+- (void)openUrl:(NSURL *_Nonnull)url window:(NSInteger)windowId;
+- (void)closeWindow:(NSInteger)windowId;
+- (void)showErrorMessage:(NSString *_Nonnull)errMsg window:(NSInteger)windowId;
 
 @end
 
 @interface HtmlFormsServer : NSObject
 
-@property (weak) id<HtmlFormsServerDelegate> _Nullable delegate;
+@property(weak) id<HtmlFormsServerDelegate> _Nullable delegate;
 
--(nonnull instancetype)initWithPort:(NSInteger)port sessionDir:(NSURL* _Nonnull)sessionDir;
--(void)connectClientFd:(int)clientFd;
--(void)start;
--(void)stop;
+- (nonnull instancetype)initWithPort:(NSInteger)port
+                          sessionDir:(NSURL *_Nonnull)sessionDir;
+- (void)connectClientFd:(int)clientFd;
+- (void)closeWindow:(NSInteger)windowId;
+- (void)start;
+- (void)stop;
 
 @end
